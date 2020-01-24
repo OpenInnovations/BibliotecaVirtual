@@ -1,8 +1,9 @@
-const express = require('express')
-const app = express()
- 
-app.get('/', function (req, res) {
-  res.send('Transfer Controller by Jose Quispe')
-})
- 
-app.listen(3000);
+const express = require('express');
+const app = express();
+var router = require('./routes/index.js');
+
+app.use('/', router);
+
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+});
