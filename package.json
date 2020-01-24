@@ -1,0 +1,27 @@
+{
+  "name": "transfer-controller",
+  "version": "1.0.0",
+  "description": "Controlador que administrará: subida de archivos,  lógica de indexación, almacenamiento de datos relevantes en MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/main.js",
+    "start:dev": "nodemon src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenInnovations/BibliotecaVirtual.git"
+  },
+  "author": "José Luis Quispe Luyo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OpenInnovations/BibliotecaVirtual/issues"
+  },
+  "homepage": "https://github.com/OpenInnovations/BibliotecaVirtual#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
