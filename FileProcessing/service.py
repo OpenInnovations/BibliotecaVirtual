@@ -1,5 +1,8 @@
 from transformer import Transformer
-from flask import Flask, request, jsonify
+from flask import Flask
+from flask import request
+from flask import Response
+import json
 import os
 import requests
 
@@ -20,7 +23,7 @@ def procesar():
     descargarDocumento(url=jsonRecibido['url'])
     procesar = Transformer()
     procesar.extraerContenido()
-    return jsonify(procesar.minarContenido())
+    return Response(json.dumps(procesar.minarContenido(), ensure_ascii=False), mimetype='application/json')
 
 
 def descargarDocumento(url: str):

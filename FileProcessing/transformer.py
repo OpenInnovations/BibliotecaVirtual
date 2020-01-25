@@ -40,7 +40,7 @@ class Transformer():
 
         tokens = set()
         stop_words = set(stopwords.words())
-        jsonRetornar = '{'
+        result = []
         for word in word_tokens:
             if word not in stop_words:
                 if word.isalnum():
@@ -49,10 +49,15 @@ class Transformer():
                             int(word)
                         except:
                             tokens.add(word)
-                            jsonRetornar += '"palabra":"' + str(word) + '"'
-        jsonRetornar += '}'
+                            result.append(word)
 
-        return jsonRetornar
+        json_devolver = {
+            'keywords': {
+                'word': result
+            }
+        }
+
+        return json_devolver
 
 
 if __name__ == '__main__':
