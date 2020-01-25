@@ -5,6 +5,7 @@ const Multer = require('Multer');
 
 const gcsMiddlewares = require("../middlewares/google-cloud-storage");
 const bookMiddlewares = require("../middlewares/book");
+const processingMiddlewares = require('./../middlewares/fileProcessing')
 
 const multer = Multer({
     storage: Multer.MemoryStorage,
@@ -29,6 +30,7 @@ router.post(
     '/upload',
     multer.single('test'),
     gcsMiddlewares.sendUploadToGCS,
+    processingMiddlewares.processing,
     bookMiddlewares.saveBook,
     (req, res, next) => {
         if (req.file && req.file.gcsUrl) {
@@ -37,7 +39,7 @@ router.post(
                 .status(200)
                 .json({
                     message: "Upload was successful",
-                    book: req.file.book
+                    book: req.book
                 })
         }
 

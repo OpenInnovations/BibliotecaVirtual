@@ -72,7 +72,11 @@ exports.deleteFileGCS = async (req, res, next) => {
         }
         next();
     } catch (error) {
-        next(error);
+        console.log(error);
+        return res
+            .status(404)
+            .json(error.errors)
+        // next(error.message);
     }
 
 }
