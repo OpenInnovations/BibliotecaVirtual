@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bibliotecavirtual-266119",
+  "private_key_id": "099f0ef4e7fb9116d6e59bc9b2e5afbfd0fd7b54",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC4LPCsBw2wehBH\n0E4d5H20h7hANQXVUocVaNmsDN51eKm4NATEEmOFvKPQ6AYRKC+FAuz/eGntxLfq\nET55qw4jrvhu6Q0AmuFh800rd29/GPjuOkIIuIBzJLHZeUiZ+l430rE58ca8mrPd\nDsUhwnINQZqzBxn1lZWiigkxNkMuSLDe2dEd8c87uiCCZgu7tagb11w+aZQzGapN\n80D+mtPSFwju7C6jmXIwZww6yTGgtUG46pzW24hu/ZLiHKVOOPk3GlF9VvDcpZ+Q\nkNdmbbN8pSwxQhDBmc1ZX3WSkZWQi/3fOHHRqBXmUYqe2/PClvGiaMDKTQEyUls8\n6Un56yudAgMBAAECggEAPsYmg+PlkRSRrwB7V6n1BI7LyKqp4dM+spfptUAvpKdr\nZZrpUvEXldI9nasvwjJJvBLKt6qRpFaL/w5AlpSsfZIaICdz5JRlpI6aa2nKiW34\nDq6xqipEsbo8mizCB6Vz7p/0AxV60PcDviFWJJMTb5xAP6v4d6Gz/lIBHxJpJIFS\ngNG4g9Bx/YKcacRkaG2GL8aPAq+9/3z7vs0TKXL859aeEO9MJUU9pFnnzLzxPdB5\nac9+O35f8C0n3Qsff5fV+a0phqsiWPkpMbv9KJyYbrSaDOZvHN/CtIPtxyju611r\nX4XGFCKLWP4EtGGkQtHajxqpHgYt47OFc33+H3UdSwKBgQDu8tnBI7+gT3zc+2+i\nsoZiwSl5cTupB80/OSbpFZsZ78ca4OX3uWr+Ila1wUcHG8tIULeooBDfoNsyfXUi\n7+D8rjiWtO2UFq3iQ3N6Sz8u5MWXejCJ5GHczMm3mo+uooOYNS+b5u2ZUiRMtfcI\nKirh1MJTDim+ZqNw2D62GjYqmwKBgQDFUXyPbIhbfk7+fviV9pomks9pFnAitE3I\n/0cBjf0u+/L/VjFirow8ayysGbliHIL5xrca5L6NVuRVm0UNG4H3NgyPpD2AsH8N\nXx372c7N/p9dUg4sqQ0yVdSj0g2r0BmFrg40Jv4KgX3pDpb4QQdEgVCKb4yZ/p1u\nR/Pa5TvqJwKBgQDCIcHyndWpLAtZClq3h22RPDgy92EuQi1pyUgopKofl2RfHQsZ\niaY4lLN39XB8gQNWXGXqdSlgVrLfwXfyi4tyHyXQo2xGHWrmYkCmwg2yTqGOIPLg\nhRFRL3xPVB6aFmTtu4BTnHm7UDY3sLrkAkZWteGvUtltXLw7CSViE8egMwKBgQC9\nFK3o/lbYXfwykdeCVPI4vnw0toS0LNVRI5aWXcrdSB/+IElox9yoVQdUz72+z5WO\n5qY2Bja3WCmsAwMzYUW0cD2vM/KfrAHD/X7NBVXQPgvWsDfXAhQcRPVkGnhxSRP7\n7uO7hBXyWU4fk5SFxkLBma1lSymPs9aGhDqgawR0BwKBgQCAN2w7dMHZqCvkHrKs\n+NSeEVO5m/E/+clH45G0ma3A6S2o9gXoaZyQlC1ZYW7g+d4c6lhJylamJUlWhi2x\n3/OVpAp+PwNnJkzhxpSMaRDUXYsQZ0ruySKpGs7r/W59gyhJ3mQMIDApaN1be7Q1\nKUdR+38ebdcH5GT3sCf85l1ltw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "biblioteca-virtual-storage@bibliotecavirtual-266119.iam.gserviceaccount.com",
+  "client_id": "114664877043590190524",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/biblioteca-virtual-storage%40bibliotecavirtual-266119.iam.gserviceaccount.com"
+}
