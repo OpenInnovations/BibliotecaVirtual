@@ -17,10 +17,9 @@ exports.sendUploadToGCS = (req, res, next) => {
     }
 
     const bucketName = req.body.bucketName || DEFAULT_BUCKET_NAME;
-    console.log(storage);
-    
+
     const bucket = storage.bucket(bucketName);
-    const gcsFileName = `${Date.now()}-${req.file.originalname}`;
+    const gcsFileName = `${Date.now()}-${req.file.originalname.replace(/ /g, "_")}`;
     const file = bucket.file(gcsFileName);
 
     const stream = file.createWriteStream({

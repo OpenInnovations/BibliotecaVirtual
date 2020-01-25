@@ -1,27 +1,37 @@
-require('./config/env');
+const config = require('./config/env');
 const express = require('express');
 const app = express();
 var router = require('./routes/index.js');
 var mongoose = require('mongoose');
 
+//Configurando Json
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//routers
 app.use('/', router);
 
-// Creamos la variable PORT para indicar el puerto en el que va a funcionar el servidor
-var port = 3800;
+//Configuración para la conexión con Mongo
+const { db: { host, port, name } } = config;
+const connectionString = `mongodb://${host}:${port}`;
 
-// Le indicamos a Mongoose que haremos la conexión con Promesas
-mongoose.Promise = global.Promise;
+//Conexión con Mongo
+(async ()=>{
+    try {     
+        // Nos conectamos a la base de datos
+        await mongoose.connect(connectionString, {
+            useNewUrlParser: true,
+            dbName: name,
+            // user: user,
+            // pass: pass
+        });    
 
-
-// Usamos el método connect para conectarnos a nuestra base de datos
-mongoose.connect(process.env.NODE_ENV, {useNewUrlParser: true})
-    .then(() => {
-
-        // CREAR EL SERVIDOR WEB CON NODEJS
-        app.listen(port, () => {
-            console.log("servidor corriendo en http://localhost:3000");
+        //Levantamos el servidor en el puerto especificado en la configuración
+        app.listen(config.app.port, () => {
+            console.log(`servidor corriendo en http://localhost:${config.app.port}`);
         });
 
-    })
-    // Si no se conecta correctamente escupimos el error
-    .catch(err => console.log(err));
+    } catch (error) {
+        console.log(error);
+    }
+})();

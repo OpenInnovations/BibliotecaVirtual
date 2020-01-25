@@ -1,17 +1,28 @@
-  
-// Puerto
-process.env.PORT = process.env.PORT || 3000;
+const dev = {
+    app: {
+        port: parseInt(process.env.DEV_APP_PORT) || 3000
+    },
+    db: {
+        host: process.env.DEV_DB_HOST || 'localhost',
+        port: parseInt(process.env.DEV_DB_PORT) || 27017,
+        name: process.env.DEV_DB_NAME || 'db'
+    }
+};
 
-//Entorno
-process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+const test = {
+    app: {
+        port: parseInt(process.env.TEST_APP_PORT) || 3000
+    },
+    db: {
+        host: process.env.TEST_DB_HOST || 'localhost',
+        port: parseInt(process.env.TEST_DB_PORT) || 27017,
+        name: process.env.TEST_DB_NAME || 'test'
+    }
+};
 
+const config = {
+    dev,
+    test
+};
 
-let urlDB;
-
-if (process.env.NODE_ENV === 'dev') {
-    urlDB = 'mongodb://localhost:27017/books';
-} else {
-    urlDB = process.env.MONGO_URI;
-}
-
-process.env.NODE_ENV = urlDB;
+module.exports = config[process.env.NODE_ENV || "dev"];
