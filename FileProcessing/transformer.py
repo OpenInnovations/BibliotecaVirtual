@@ -52,9 +52,7 @@ class Transformer():
                             result.append(word)
 
         json_devolver = {
-            'keywords': {
-                'word': result
-            }
+            'keywords': result
         }
 
         return json_devolver
