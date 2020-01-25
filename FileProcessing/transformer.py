@@ -11,14 +11,13 @@ from nltk.tokenize import word_tokenize
 class Transformer():
 
     def __init__(self):
-        self.urlFileInput = str(os.getcwd()) + '\Input\demo.pdf'
-        self.urlFileOutput = 'ahahah'
-        self.contenido = 'ahahah'
+        self.urlFileInput = str(os.getcwd()) + '\Input\documento.pdf'
+        self.contenido = 'No se pudo procesar'
 
     def extraerContenido(self):
         rsrcmgr = PDFResourceManager()
         sio = StringIO()
-        device = TextConverter(rsrcmgr, sio, codec='utf-8', laparams=LAParams())
+        device = TextConverter(rsrcmgr, sio, laparams=LAParams())
         interpreter = PDFPageInterpreter(rsrcmgr, device)
 
         fp = open(self.urlFileInput, 'rb')
@@ -31,15 +30,17 @@ class Transformer():
         device.close()
         sio.close()
 
+    def traducirToEnglish(self):
+        pass
+
     def minarContenido(self):
         self.extraerContenido()
         # nltk.download('all')
         word_tokens = word_tokenize(self.contenido)
 
         tokens = set()
-        result = []
-        stop_words = set(stopwords.words('english'))
-
+        stop_words = set(stopwords.words())
+        jsonRetornar = '{'
         for word in word_tokens:
             if word not in stop_words:
                 if word.isalnum():
@@ -48,10 +49,12 @@ class Transformer():
                             int(word)
                         except:
                             tokens.add(word)
-                            result.append(word)
+                            jsonRetornar += '"palabra":"' + str(word) + '"'
+        jsonRetornar += '}'
 
-        print(result)
+        return jsonRetornar
 
 
-t = Transformer()
-t.minarContenido()
+if __name__ == '__main__':
+    t = Transformer()
+    t.minarContenido()
