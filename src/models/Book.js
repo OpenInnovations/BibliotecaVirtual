@@ -1,13 +1,18 @@
 // Cargamos el módulo de mongoose
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 // Usaremos los esquemas
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 // Creamos el objeto del esquema y sus atributos
-var BookSchema = new Schema({
+let BookSchema = new Schema({
 
     title: {
         type: String,
         required: [true, 'El titulo del libro es necesario']
+    },
+
+    filename: {
+        type: String,
+        required: [true]
     },
 
     author: {
@@ -15,16 +20,12 @@ var BookSchema = new Schema({
         required: false
     },
 
-    img: {
+    url: {
         type: String,
         required: false
     },
 
-    keywords: [
-        {
-            word: String,
-        }
-    ],
+    keywords: [String],
 
     uploadedDate: {
         type: Date,
@@ -41,7 +42,7 @@ var BookSchema = new Schema({
         default: "Otros"
     },
 
-});
+}, {collection: "Books"});
 
 // BookSchema.methods.toJSON = function () {
 

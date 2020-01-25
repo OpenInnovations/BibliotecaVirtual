@@ -1,7 +1,6 @@
 const config = require('./config/env');
 const express = require('express');
 const app = express();
-var router = require('./routes/index.js');
 var mongoose = require('mongoose');
 
 //Configurando Json
@@ -9,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routers
-app.use('/', router);
+app.use(require('./routes/index.js'));
 
 //Configuración para la conexión con Mongo
 const { db: { host, port, name } } = config;

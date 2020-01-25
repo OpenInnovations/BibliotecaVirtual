@@ -1,5 +1,4 @@
-const gcsHelpers = require('./../helpers/google-cloud-storage');
-
+const gcsHelpers = require('../helpers/google-cloud-storage');
 const { storage } = gcsHelpers;
 
 const DEFAULT_BUCKET_NAME = 'biblioteca-virtual'; // Replace with the name of your bucket
@@ -35,7 +34,6 @@ exports.sendUploadToGCS = (req, res, next) => {
 
     stream.on('finish', () => {
         req.file.cloudStorageObject = gcsFileName;
-
         return file.makePublic()
             .then(() => {
                 req.file.gcsUrl = gcsHelpers.getPublicUrl(bucketName, gcsFileName);
@@ -45,3 +43,36 @@ exports.sendUploadToGCS = (req, res, next) => {
 
     stream.end(req.file.buffer);
 };
+
+
+
+
+
+
+/**
+ * Middleware for deleting file GCS.
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @return {*}
+ */
+exports.deleteFileGCS = async (req, res, next) => {
+
+    const { filename, bucketName } = req.body;
+
+    try {
+        await storage
+            .bucket(bucketName || DEFAULT_BUCKET_NAME)
+            .file(filename)
+            .delete();
+
+        req.response = {
+            uri: `gs://${bucketName}/${filename} deleted.`,
+            storage: true,
+        }
+        next();
+    } catch (error) {
+        next(error);
+    }
+
+}
