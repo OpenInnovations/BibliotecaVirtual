@@ -6,6 +6,7 @@ from pdfminer.layout import LAParams
 from io import StringIO
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from textblob import TextBlob
 
 
 class Transformer():
@@ -30,12 +31,15 @@ class Transformer():
         device.close()
         sio.close()
 
-    def traducirToEnglish(self):
-        pass
+        del rsrcmgr, sio, device, interpreter
+
+    def sentimientos(self):
+        tb = TextBlob(text=self.contenido)
+        # tb.translate(to="en")
+        return tb.sentiment
 
     def minarContenido(self):
         self.extraerContenido()
-        # nltk.download('all')
         word_tokens = word_tokenize(self.contenido)
 
         tokens = set()
@@ -51,9 +55,17 @@ class Transformer():
                             tokens.add(word)
                             result.append(word)
 
+        sentimiento = self.sentimientos()
+
         json_devolver = {
-            'keywords': result
+            'keywords': result,
+            'sentiment': {
+                'polarity': sentimiento.polarity,
+                'subjectivity': sentimiento.subjectivity
+            }
         }
+
+        del sentimiento, self.contenido, result, tokens, word_tokens
 
         return json_devolver
 
