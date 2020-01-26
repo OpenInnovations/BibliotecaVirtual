@@ -25,7 +25,7 @@ class Transformer():
             interpreter.process_page(page)
         fp.close()
 
-        self.contenido = sio.getvalue()
+        self.contenido = sio.getvalue().lower()
 
         device.close()
         sio.close()
