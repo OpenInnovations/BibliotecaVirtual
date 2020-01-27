@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const Multer = require('Multer');
+const Multer = require('multer');
 
-const gcsMiddlewares = require("../middlewares/google-cloud-storage");
-const bookMiddlewares = require("../middlewares/book");
+const gcsMiddlewares = require("./../middlewares/google-cloud-storage");
+const bookMiddlewares = require("./../middlewares/book");
 const processingMiddlewares = require('./../middlewares/fileProcessing')
 
 const multer = Multer({

@@ -1,4 +1,4 @@
-const gcsHelpers = require('../helpers/google-cloud-storage');
+const gcsHelpers = require('./../helpers/google-cloud-storage');
 const { storage } = gcsHelpers;
 
 const DEFAULT_BUCKET_NAME = 'biblioteca-virtual'; // Replace with the name of your bucket
