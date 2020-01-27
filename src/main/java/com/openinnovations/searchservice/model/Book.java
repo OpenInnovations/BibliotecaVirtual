@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -12,8 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 public class Book {
 
-    @Id
-    private long _id;
+//    @Id
+//    private long _id;
     private String title;
     private String filename;
     private String author;

@@ -1,0 +1,2 @@
+FROM maven:onbuild
+CMD ["java", "-jar", "target/searchservice-1.jar"]
