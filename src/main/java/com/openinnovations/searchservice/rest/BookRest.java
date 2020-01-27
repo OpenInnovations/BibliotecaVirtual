@@ -50,9 +50,14 @@ public class BookRest {
     }
 
     //En Desarrollo
+//    @GetMapping
+//    public List<Book> listarTodo(@RequestBody List<String> palabras) {
+//        System.out.println(palabras);
+//        return repo.findAllByKeywordsContainsOrTitleContainsOrAuthorContainsOrCategoryContains(palabras, palabras.get(0), palabras.get(0), palabras.get(0));
+//    }
+
     @GetMapping
-    public List<Book> listarTodo(@RequestBody List<String> palabras) {
-        System.out.println(palabras);
-        return repo.findAllByKeywordsContainsOrTitleContainsOrAuthorContainsOrCategoryContains(palabras, palabras.get(0), palabras.get(0), palabras.get(0));
+    public List<Book> listarTodo() {
+        return repo.findAll();
     }
 }

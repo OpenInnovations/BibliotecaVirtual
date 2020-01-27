@@ -18,8 +18,9 @@ public class Book {
     private String filename;
     private String author;
     private String url;
-    List<String> keywords;
-    Date uploadedDate = new Date();
-    boolean hidden;
-    String category;
+    private List<String> keywords;
+    private Date uploadedDate;
+    private boolean hidden;
+    private String category;
+    private Sentiment sentiment;
 }
