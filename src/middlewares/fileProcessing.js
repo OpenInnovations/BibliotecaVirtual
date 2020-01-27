@@ -20,7 +20,7 @@ exports.processing = async (req, res, next) => {
         let response = fs.readFileSync(ruta, 'utf-8');
         /**END Reemplazar por axios*/
 
-        req.keywords = JSON.parse(response).keywords;
+        req.processing = JSON.parse(response);
         
         next();
 

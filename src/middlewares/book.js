@@ -18,7 +18,8 @@ exports.saveBook = async (req, res, next) => {
         filename: req.file.cloudStorageObject,
         author: "autor",
         url: req.file.gcsUrl,
-        keywords: req.keywords
+        keywords: req.processing.keywords,
+        sentiment: req.processing.sentiment
     })
         console.log("Espera guardado");  
         try {

@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(require('./routes/index.js'));
 
 //Configuración para la conexión con Mongo
-const { db: { host, port, name } } = config;
+const { db: { host, port, dbName, user, pass } } = config;
 const connectionString = `mongodb://${host}:${port}`;
 
 //Conexión con Mongo
@@ -20,13 +20,14 @@ const connectionString = `mongodb://${host}:${port}`;
         // Nos conectamos a la base de datos
         await mongoose.connect(connectionString, {
             useNewUrlParser: true,
-            dbName: name,
-            // user: user,
-            // pass: pass
+            dbName,
+            user,
+            pass
         });    
 
         //Levantamos el servidor en el puerto especificado en la configuración
         app.listen(config.app.port, () => {
+            console.log(config)
             console.log(`servidor corriendo en http://localhost:${config.app.port}`);
         });
 

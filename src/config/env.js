@@ -1,28 +1,14 @@
-const dev = {
-    app: {
-        port: parseInt(process.env.DEV_APP_PORT) || 3000
-    },
-    db: {
-        host: process.env.DEV_DB_HOST || 'localhost',
-        port: parseInt(process.env.DEV_DB_PORT) || 27017,
-        name: process.env.DEV_DB_NAME || 'db'
-    }
-};
-
-const test = {
-    app: {
-        port: parseInt(process.env.TEST_APP_PORT) || 3000
-    },
-    db: {
-        host: process.env.TEST_DB_HOST || 'localhost',
-        port: parseInt(process.env.TEST_DB_PORT) || 27017,
-        name: process.env.TEST_DB_NAME || 'test'
-    }
-};
-
 const config = {
-    dev,
-    test
+    app: {
+        port: parseInt(process.env.APP_PORT) || 3000
+    },
+    db: {
+        host: process.env.DB_HOST || 'localhost',
+        port: parseInt(process.env.DB_PORT) || 27017,
+        dbName: process.env.DB_NAME || 'db',
+        user: process.env.DB_USER || 'dev',
+        pass: process.env.DB_PASS || 'DevPass'
+    }
 };
 
-module.exports = config[process.env.NODE_ENV || "dev"];
+module.exports = config;

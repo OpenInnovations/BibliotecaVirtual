@@ -42,6 +42,11 @@ let BookSchema = new Schema({
         default: "Otros"
     },
 
+    sentiment: {
+        polarity: Number,
+        subjectivity: Number
+    }
+
 }, {collection: "Books"});
 
 // BookSchema.methods.toJSON = function () {
