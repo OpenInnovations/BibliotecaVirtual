@@ -1,15 +1,21 @@
 FROM python:3.7-alpine
 
-LABEL Name=fileprocessing Version=0.0.1
+LABEL Name=file-processing Version=0.0.1
 EXPOSE 3001
 
-WORKDIR /app
-ADD . /app
+ADD . /
+
+RUN apk add --no-cache --virtual .py_deps build-base python3-dev libffi-dev openssl-dev
 
 #Dependencias app
-RUN py -m pip install -r requirements.txt
+#RUN python3 -m pip install cryptography
+RUN python3 -m pip install google-cloud-storage
+RUN python3 -m pip install -r requirements.txt
 
 #Recursos nltk
-RUN py -m nltk.downloader all
+RUN [ "python3", "-c", "import nltk; nltk.download('stopwords'); nltk.download('punkt');" ]
 
-CMD ["py","./service.py"]
+ENTRYPOINT ["python3","./service.py"]
+
+#sudo docker build -t file-processing .
+#sudo docker run -p 3001:3001 -dit --name="file-processing" "file-processing"

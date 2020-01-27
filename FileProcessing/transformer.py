@@ -12,7 +12,7 @@ from textblob import TextBlob
 class Transformer():
 
     def __init__(self):
-        self.urlFileInput = str(os.getcwd()) + '\Input\documento.pdf'
+        self.urlFileInput = os.path.join(os.path.dirname(__file__), 'Input', 'documento.pdf')
         self.contenido = 'No se pudo procesar'
 
     def extraerContenido(self):

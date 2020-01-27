@@ -2,4 +2,3 @@ nltk==3.4.5
 Flask==1.1.1
 pdfminer==20191125
 textblob==0.15.3
-protobuf==3.11.2
