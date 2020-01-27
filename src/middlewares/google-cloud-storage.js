@@ -11,9 +11,12 @@ const DEFAULT_BUCKET_NAME = 'biblioteca-virtual'; // Replace with the name of yo
  * @return {*}
  */
 exports.sendUploadToGCS = (req, res, next) => {
+    
     if (!req.file) {
         return next();
     }
+
+    console.log("Enviado a STORAGE");
 
     const bucketName = req.body.bucketName || DEFAULT_BUCKET_NAME;
 
@@ -37,6 +40,7 @@ exports.sendUploadToGCS = (req, res, next) => {
         return file.makePublic()
             .then(() => {
                 req.file.gcsUrl = gcsHelpers.getPublicUrl(bucketName, gcsFileName);
+                req.processingUrl = {url: `gs://${bucketName}/${gcsFileName}`},
                 next();
             });
     });

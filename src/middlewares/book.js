@@ -8,7 +8,8 @@ const Book = require('../models/Book');
  * @return {*}
  */
 exports.saveBook = async (req, res, next) => {
-
+    console.log("Guardando Book");
+    
     if (!req.file) {
         return next();
     }
