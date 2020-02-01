@@ -12,18 +12,17 @@ app.use(require('./routes/index.js'));
 
 //Configuración para la conexión con Mongo
 const { db: { host, port, dbName, user, pass } } = config;
-const connectionString = `mongodb://${host}:${port}`;
+//const connectionString = `mongodb://${host}:${port}`; //MongoDB local
+const connectionString = `mongodb+srv://${host}`; //MongoDB Atlas
+console.log(connectionString);
 
 //Conexión con Mongo
-(async ()=>{
-    try {     
+(async () => {
+    try {
         // Nos conectamos a la base de datos
-        await mongoose.connect(connectionString, {
-            useNewUrlParser: true,
-            dbName,
-            user,
-            pass
-        });    
+        await mongoose.connect(connectionString, { useNewUrlParser: true, dbName, user, pass });
+
+        //await mongoose.connect(connectionString, { useNewUrlParser: true });    
 
         //Levantamos el servidor en el puerto especificado en la configuración
         app.listen(config.app.port, () => {

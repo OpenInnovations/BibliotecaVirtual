@@ -7,5 +7,5 @@ app.get('/', (req, res) => {
 
 
 app.use('/file',require('./file'));
-
+app.use('/test',require('./test'));
 module.exports = app;
