@@ -19,7 +19,7 @@ public class Book {
     private String url;
     private List<String> keywords;
     private Date uploadedDate;
-    private boolean hidden;
+    private Boolean hidden;
     private String category;
     private Sentiment sentiment;
 }
