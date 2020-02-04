@@ -10,6 +10,7 @@ public class Book {
     private Integer numberPages;
     private Long size;
     private Set<String> keywords;
+    private Object sentiment;
 
     public String getIsbn() {
         return isbn;
@@ -49,5 +50,13 @@ public class Book {
 
     public void setKeywords(Set<String> keywords) {
         this.keywords = keywords;
+    }
+
+    public Object getSentiment() {
+        return sentiment;
+    }
+
+    public void setSentiment(Object sentiment) {
+        this.sentiment = sentiment;
     }
 }
