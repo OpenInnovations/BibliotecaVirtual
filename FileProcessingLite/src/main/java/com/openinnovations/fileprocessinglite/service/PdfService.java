@@ -4,7 +4,7 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.openinnovations.fileprocessinglite.model.Book;
-import lombok.Getter;
+
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
@@ -14,7 +14,6 @@ import java.util.Set;
 
 public class PdfService {
 
-    @Getter
     private Book book;
 
     public PdfService() {
@@ -66,4 +65,7 @@ public class PdfService {
         System.out.println("Datos extraidos");
     }
 
+    public Book getBook() {
+        return book;
+    }
 }
