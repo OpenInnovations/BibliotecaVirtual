@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -11,15 +12,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 public class Book {
 
-//    @Id
-//    private long _id;
+    @Id
+    public String id;
     private String title;
     private String filename;
     private String author;
+    private String description;
     private String url;
     private List<String> keywords;
     private Date uploadedDate;
     private Boolean hidden;
     private String category;
-    private Sentiment sentiment;
 }

@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-public interface IBook extends MongoRepository<Book, Long> {
+public interface IBook extends MongoRepository<Book, String> {
 
     List<Book> findAllByKeywordsContains(List<String> keywords);
 
