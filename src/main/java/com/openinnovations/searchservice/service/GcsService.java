@@ -1,13 +1,16 @@
 package com.openinnovations.searchservice.service;
 
 import com.google.api.client.util.DateTime;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import com.openinnovations.searchservice.model.Book;
 import com.openinnovations.searchservice.model.FileProcessing;
 import com.openinnovations.searchservice.repository.IBook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,17 +25,26 @@ import java.util.Optional;
 public class GcsService {
 
     @Autowired
-    private Storage storage;
-    @Autowired
     private IBook bookRepository;
     @Autowired
     private FileProcessingService fileProcessing_S;
 
+    private Storage storage;
+
+    public GcsService() throws IOException {
+        storage = StorageOptions.newBuilder()
+                .setProjectId("bibliotecavirtual-266119")
+                .setCredentials(GoogleCredentials.fromStream(new ClassPathResource("static/credenciales.json").getInputStream()))
+                .build()
+                .getService();
+    }
+
+
     public Book upload(MultipartFile filePart, String author, String description, String category) throws IOException {
-        DateTime dt = new DateTime(new Date());
-        String dtString = dt.toString();
-        final String fileName = dtString +"-"+ filePart.getOriginalFilename();
+
+        final String fileName = new DateTime(new Date()).toString() + "-" + filePart.getOriginalFilename();
         final String bucketName = "biblioteca-virtual";
+
 
         BlobInfo blobInfo = storage.create(
                 BlobInfo
@@ -68,10 +80,10 @@ public class GcsService {
         return bookRepository.save(book);
     }
 
-    public ResponseEntity<Void> delete(String id){
+    public ResponseEntity<Void> delete(String id) {
         Optional<Book> book = bookRepository.findById(id);
 
-        if(!book.isPresent()){
+        if (!book.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
