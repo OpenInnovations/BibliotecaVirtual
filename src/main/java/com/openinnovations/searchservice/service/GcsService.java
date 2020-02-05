@@ -2,21 +2,21 @@ package com.openinnovations.searchservice.service;
 
 import com.google.api.client.util.DateTime;
 import com.google.cloud.storage.Acl;
-import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.openinnovations.searchservice.model.Book;
 import com.openinnovations.searchservice.model.FileProcessing;
-import com.openinnovations.searchservice.model.UrlFileGCS;
 import com.openinnovations.searchservice.repository.IBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class GcsService {
@@ -52,10 +52,12 @@ public class GcsService {
         book.setDescription(description);
         book.setUrl(blobInfo.getMediaLink());
 
-        UrlFileGCS urlModel = new UrlFileGCS();
-        urlModel.setUrl("gs://"+ bucketName + "/" + fileName);
-        FileProcessing fileProcessing = fileProcessing_S.sedUrl(urlModel);
+        FileProcessing fileProcessing = fileProcessing_S.sedUrl(fileName);
+        book.setIsbn(fileProcessing.getIsbn());
+        book.setNumberPages(fileProcessing.getNumberPages());
+        book.setSentiment(fileProcessing.getSentiment());
         book.setKeywords(fileProcessing.getKeywords());
+        book.setInfo(fileProcessing.getInfo());
 
         book.setUploadedDate(new Date());
         book.setCategory(category);

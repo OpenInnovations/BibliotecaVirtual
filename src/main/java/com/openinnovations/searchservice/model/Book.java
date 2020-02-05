@@ -1,7 +1,9 @@
 package com.openinnovations.searchservice.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -20,7 +22,14 @@ public class Book {
     private String author;
     private String description;
     private String url;
-    private List<String> keywords;
+
+    private String isbn;
+    private HashMap<String, String> info;
+    private Integer numberPages;
+    private Long size;
+    private Set<String> keywords;
+    private Object sentiment;
+
     private Date uploadedDate;
     private Boolean hidden;
     private String category;
