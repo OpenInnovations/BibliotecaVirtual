@@ -70,6 +70,7 @@ public class GcsService {
         book.setSentiment(fileProcessing.getSentiment());
         book.setKeywords(fileProcessing.getKeywords());
         book.setInfo(fileProcessing.getInfo());
+        book.setSize(fileProcessing.getSize());
 
         book.setUploadedDate(new Date());
         book.setCategory(category);
