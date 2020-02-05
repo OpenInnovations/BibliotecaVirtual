@@ -26,7 +26,6 @@ public class StorageService {
         FileOutputStream fileOuputStream = new FileOutputStream(ResourceUtils.getFile("classpath:input/documento.pdf"));
         fileOuputStream.getChannel().transferFrom(readChannel, 0, Long.MAX_VALUE);
         fileOuputStream.close();
-        System.out.println("Pdf Descargado");
     }
 
 }

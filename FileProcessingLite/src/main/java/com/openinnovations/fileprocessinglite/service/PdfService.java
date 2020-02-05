@@ -62,7 +62,6 @@ public class PdfService {
         }
 
         reader.close();
-        System.out.println("Datos extraidos");
     }
 
     public Book getBook() {
