@@ -3,7 +3,6 @@ package com.openinnovations.fileprocessinglite.rest;
 import com.openinnovations.fileprocessinglite.clients.SentimentClient;
 import com.openinnovations.fileprocessinglite.model.Book;
 import com.openinnovations.fileprocessinglite.service.PdfService;
-import com.openinnovations.fileprocessinglite.service.StorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin({"*"})
 @RestController
@@ -27,19 +25,16 @@ public class BookRest {
         //1580768555676-Programa_lectivo.pdf
         if (storageFileName.isPresent()) {
 
-            StorageService storageService = new StorageService();
-            storageService.descargarFromStorage(storageFileName.get());
 
             PdfService pdfService = new PdfService();
-            pdfService.extraerDatos();
+            pdfService.extraerDatos(storageFileName.get());
             Book book = pdfService.getBook();
 
-            storageService = null;
             pdfService = null;
 
             MultiValueMap<String, String> payload = new LinkedMultiValueMap<>();
             payload.add("api_key", "Gmq904sbJhCd4eDBhVEgXeurGJurzEuQuHrLQ9dgTKA");
-            payload.add("text", book.getKeywords().stream().collect(Collectors.joining()));
+            payload.add("text", String.join(" ", book.getKeywords()));
             book.setSentiment(SentimentClient.analizar(payload));
             payload = null;
             System.gc();

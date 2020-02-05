@@ -5,8 +5,6 @@ import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.openinnovations.fileprocessinglite.model.Book;
 
-import org.springframework.util.ResourceUtils;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -20,11 +18,15 @@ public class PdfService {
         this.book = new Book();
     }
 
-    public void extraerDatos() throws IOException {
+    public void extraerDatos(String storageFileName) throws IOException {
         Set<String> texto = new HashSet<>();
 
-        PdfReader reader = new PdfReader(ResourceUtils.getFile("classpath:input/documento.pdf").getAbsolutePath());
+        StorageService storageService = new StorageService();
+        storageService.descargarFromStorage(storageFileName);
+
+        PdfReader reader = new PdfReader(storageService.getTemporalPdf().getAbsolutePath());
         PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+
         SimpleTextExtractionStrategy strategy;
 
         book.setInfo(reader.getInfo());
@@ -47,7 +49,7 @@ public class PdfService {
                                     if (isbn.split("-").length >= 4)
                                         book.setIsbn(isbn);
 
-                            } catch (Exception error) {
+                            } catch (Exception ignored) {
                             }
 
                         Arrays.stream(e.replaceAll("[^a-zA-Z0-9]", " ").split(" "))
@@ -62,6 +64,7 @@ public class PdfService {
         }
 
         reader.close();
+        storageService.getTemporalPdf().delete();
     }
 
     public Book getBook() {
