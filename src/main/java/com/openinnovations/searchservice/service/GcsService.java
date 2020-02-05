@@ -2,27 +2,31 @@ package com.openinnovations.searchservice.service;
 
 import com.google.api.client.util.DateTime;
 import com.google.cloud.storage.Acl;
+import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.openinnovations.searchservice.model.Book;
+import com.openinnovations.searchservice.model.FileProcessing;
+import com.openinnovations.searchservice.model.UrlFileGCS;
 import com.openinnovations.searchservice.repository.IBook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
 
 @Service
-public class UploadToGcpService {
+public class GcsService {
 
     @Autowired
     private Storage storage;
     @Autowired
-    IBook bookRepository;
-
-    private Book book;
+    private IBook bookRepository;
+    @Autowired
+    private FileProcessingService fileProcessing_S;
 
     public Book upload(MultipartFile filePart, String author, String description, String category) throws IOException {
         DateTime dt = new DateTime(new Date());
@@ -38,30 +42,45 @@ public class UploadToGcpService {
                         .build(),
                 filePart.getBytes());
 
-        book = new Book();
+        System.out.println(blobInfo.getBlobId());
+
+        Book book = new Book();
+
         book.setTitle(filePart.getOriginalFilename());
-        book.setFilename(fileName);
-        book.setUrl(blobInfo.getMediaLink());
+        book.setBlobId(blobInfo.getBlobId());
         book.setAuthor(author);
         book.setDescription(description);
-        book.setCategory(category);
-        book.setHidden(false);
+        book.setUrl(blobInfo.getMediaLink());
 
-        /** Hacer peticion FileProcesing **/
-
-        List<String> keywords = new ArrayList<String>();
-        keywords.add("algo");
-        keywords.add("mas");
-        keywords.add("bueno");
-        book.setKeywords(keywords);
-
-        /** END Hacer peticion FileProcesing**/
+        UrlFileGCS urlModel = new UrlFileGCS();
+        urlModel.setUrl("gs://"+ bucketName + "/" + fileName);
+        FileProcessing fileProcessing = fileProcessing_S.sedUrl(urlModel);
+        book.setKeywords(fileProcessing.getKeywords());
 
         book.setUploadedDate(new Date());
+        book.setCategory(category);
+        book.setHidden(false);
 
         bookRepository.save(book);
 
         return bookRepository.save(book);
+    }
+
+    public ResponseEntity<Void> delete(String id){
+        Optional<Book> book = bookRepository.findById(id);
+
+        if(!book.isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+
+        book.ifPresent(x -> {
+            storage.delete(x.getBlobId());
+            bookRepository.deleteById(id);
+
+        });
+
+        return ResponseEntity.ok().build();
+
     }
 
 }

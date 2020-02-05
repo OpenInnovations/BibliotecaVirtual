@@ -1,33 +1,37 @@
 package com.openinnovations.searchservice.rest;
 
-import com.google.api.client.util.DateTime;
-import com.google.cloud.storage.Acl;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
 import com.openinnovations.searchservice.model.Book;
-import com.openinnovations.searchservice.service.UploadToGcpService;
+import com.openinnovations.searchservice.service.GcsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@CrossOrigin
+@CrossOrigin({"*"})
 @RestController
-public class UploadToGcpRest {
+@RequestMapping("/file")
+public class GcsRest {
 
     @Autowired
-    private UploadToGcpService upload;
+    private GcsService GCSService;
 
-    @PostMapping(value = "/uploadFile")
+    @PostMapping(value = "/upload")
     public Book uploadFile(
             @RequestParam("file") MultipartFile filePart,
             @RequestParam("author") String author,
             @RequestParam("description") String description,
             @RequestParam("category") String category
     ) throws IOException {
+        return GCSService.upload(filePart, author, description, category);
+    }
 
-        return upload.upload(filePart, author, description, category);
-
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteFile(
+            @PathVariable("id") String id
+    ) {
+        return GCSService.delete(id);
     }
 }

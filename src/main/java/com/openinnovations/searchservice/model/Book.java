@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.google.cloud.storage.BlobId;
 
 
 @Document(collection = "Books")
@@ -15,7 +16,7 @@ public class Book {
     @Id
     public String id;
     private String title;
-    private String filename;
+    private BlobId blobId;
     private String author;
     private String description;
     private String url;
