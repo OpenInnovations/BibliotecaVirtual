@@ -1,14 +1,12 @@
-FROM ofayau/ejre
+FROM openjdk:8u242-jre-slim
 
 MAINTAINER José Quispe
 
-RUN java -version
-
 EXPOSE 8081
 
-COPY searchservice-1.jar demo.jar
+COPY target/searchservice-1.jar searchservice.jar
 
-CMD ["java", "-jar", "demo.jar"]
+CMD ["java", "-jar", "searchservice.jar"]
 
 #chmod +x demo.jar
 #docker build -t jquispeluyo/searchservice:0.1 .
