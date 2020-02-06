@@ -11,10 +11,9 @@ public class FileProcessingService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public FileProcessing sedUrl(String filename) {
-        FileProcessing book = restTemplate.postForEntity(
+    public FileProcessing procesar(String filename) {
+        return restTemplate.postForEntity(
                 "http://35.237.68.44:3001?storageFileName="+filename, null,FileProcessing.class).getBody();
-        return book;
     }
 
 }

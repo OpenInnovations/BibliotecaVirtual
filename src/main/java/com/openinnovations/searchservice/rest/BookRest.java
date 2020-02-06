@@ -9,10 +9,16 @@ import java.util.List;
 
 @CrossOrigin({"*"})
 @RestController
+@RequestMapping("/search")
 public class BookRest {
 
     @Autowired
     IBook repo;
+
+    @GetMapping
+    public List<Book> listarTodo() {
+        return repo.findAll();
+    }
 
     @GetMapping("/keywords")
     public List<Book> buscarKeywords(@RequestBody List<String> keywords) {
@@ -21,20 +27,22 @@ public class BookRest {
 
     @GetMapping("/titulo/{titulo}")
     public List<Book> buscarTitulo(@PathVariable("titulo") String titulo) {
-        return repo.findAllByTitleContains(titulo);
+        return repo.findAllByTitleContains(titulo.toLowerCase());
     }
 
     @GetMapping("/autor/{autor}")
     public List<Book> buscarAutor(@PathVariable("autor") String autor) {
-        return repo.findAllByAuthorContains(autor);
+        return repo.findAllByAuthorContains(autor.toLowerCase());
     }
 
     @GetMapping("/categoria/{categoria}")
     public List<Book> buscarCategoria(@PathVariable("categoria") String categoria) {
-        return repo.findAllByCategoryContains(categoria);
+        return repo.findAllByCategoryContains(categoria.toLowerCase());
     }
 
-    //Solo para pruebas
+    //**
+    // Solo para pruebas
+
     @PostMapping
     public List<Book> registrar(@RequestBody List<Book> books) {
         for (Book book : books) {
@@ -43,22 +51,10 @@ public class BookRest {
         return repo.findAll();
     }
 
-    //Solo para pruebas
     @DeleteMapping
     public List<Book> borrarTodo() {
         repo.deleteAll();
         return repo.findAll();
     }
 
-    //En Desarrollo
-//    @GetMapping
-//    public List<Book> listarTodo(@RequestBody List<String> palabras) {
-//        System.out.println(palabras);
-//        return repo.findAllByKeywordsContainsOrTitleContainsOrAuthorContainsOrCategoryContains(palabras, palabras.get(0), palabras.get(0), palabras.get(0));
-//    }
-
-    @GetMapping
-    public List<Book> listarTodo() {
-        return repo.findAll();
-    }
 }

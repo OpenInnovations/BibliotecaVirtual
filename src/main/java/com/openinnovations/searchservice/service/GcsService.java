@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GcsService {
@@ -27,7 +24,7 @@ public class GcsService {
     @Autowired
     private IBook bookRepository;
     @Autowired
-    private FileProcessingService fileProcessing_S;
+    private FileProcessingService fileProcessingService;
 
     private Storage storage;
 
@@ -42,13 +39,13 @@ public class GcsService {
 
     public Book upload(MultipartFile filePart, String author, String description, String category) throws IOException {
 
-        final String fileName = new DateTime(new Date()).toString() + "-" + filePart.getOriginalFilename();
-        final String bucketName = "biblioteca-virtual";
+        final String FILENAME = new DateTime(new Date()).toString() + "-" + filePart.getOriginalFilename();
+        final String BUCKETNAME = "biblioteca-virtual";
 
 
         BlobInfo blobInfo = storage.create(
                 BlobInfo
-                        .newBuilder(bucketName, fileName)
+                        .newBuilder(BUCKETNAME, FILENAME)
                         .setContentType(filePart.getContentType())
                         .setAcl(new ArrayList<>(Arrays.asList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER))))
                         .build(),
@@ -58,13 +55,13 @@ public class GcsService {
 
         Book book = new Book();
 
-        book.setTitle(filePart.getOriginalFilename());
+        book.setTitle(Objects.requireNonNull(filePart.getOriginalFilename()).toLowerCase());
         book.setBlobId(blobInfo.getBlobId());
-        book.setAuthor(author);
-        book.setDescription(description);
+        book.setAuthor(author.toLowerCase());
+        book.setDescription(description.toLowerCase());
         book.setUrl(blobInfo.getMediaLink());
 
-        FileProcessing fileProcessing = fileProcessing_S.sedUrl(fileName);
+        FileProcessing fileProcessing = fileProcessingService.procesar(FILENAME);
         book.setIsbn(fileProcessing.getIsbn());
         book.setNumberPages(fileProcessing.getNumberPages());
         book.setSentiment(fileProcessing.getSentiment());

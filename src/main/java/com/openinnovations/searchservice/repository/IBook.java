@@ -17,7 +17,7 @@ public interface IBook extends MongoRepository<Book, String> {
 
     List<Book> findAllByCategoryContains(String category);
 
-    List<Book> findAllByKeywordsContainsOrTitleContainsOrAuthorContainsOrCategoryContains(List<String> keywords, String title, String author, String category);
+//    List<Book> findAllByKeywordsContainsOrTitleContainsOrAuthorContainsOrCategoryContains(List<String> keywords, String title, String author, String category);
 
 //    List<Book> findAllByTitleInOrAuthorInOrCategoryInOrKeywordsContains(List<String> title, List<String> author, List<String> category, List<String> keywords);
 }
