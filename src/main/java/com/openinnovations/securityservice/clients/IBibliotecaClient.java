@@ -1,10 +1,12 @@
 package com.openinnovations.securityservice.clients;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @FeignClient(name = "bibliotecaClient", url = "http://35.237.68.44:8081")
@@ -29,13 +31,13 @@ public interface IBibliotecaClient {
     List<Object> buscarCategoria(@PathVariable("categoria") String categoria);
 
 
-    @PostMapping(value = TRANSFER + "/upload")
+    @PostMapping(value = TRANSFER + "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     Object uploadFile(
-            @RequestParam("file") MultipartFile filePart,
+            @RequestPart("file") MultipartFile filePart,
             @RequestParam("author") String author,
             @RequestParam("description") String description,
             @RequestParam("category") String category
-    );
+    ) throws IOException;
 
     @DeleteMapping(value = TRANSFER + "/delete/{id}")
     ResponseEntity<Void> deleteFile(

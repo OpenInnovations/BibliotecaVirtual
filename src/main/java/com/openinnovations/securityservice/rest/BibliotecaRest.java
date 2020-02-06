@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin({"*"})
@@ -47,17 +48,23 @@ public class BibliotecaRest {
 
     @PostMapping(value = TRANSFER + "/upload")
     Object uploadFile(
-            @RequestParam("file") MultipartFile filePart,
+            @RequestPart("file") MultipartFile filePart,
             @RequestParam("author") String author,
             @RequestParam("description") String description,
             @RequestParam("category") String category
-    ) {
+    ) throws IOException {
+
+        if (filePart.isEmpty()) {
+            return "Archivo necesario ._.";
+        }
+
         return bibliotecaClient.uploadFile(
                 filePart,
                 author,
                 description,
                 category
         );
+
     }
 
     @DeleteMapping(value = TRANSFER + "/delete/{id}")
