@@ -7,7 +7,6 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.openinnovations.searchservice.model.Book;
-import com.openinnovations.searchservice.model.FileProcessing;
 import com.openinnovations.searchservice.repository.IBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -15,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -23,8 +24,7 @@ public class GcsService {
 
     @Autowired
     private IBook bookRepository;
-    @Autowired
-    private FileProcessingService fileProcessingService;
+
 
     private Storage storage;
 
@@ -51,6 +51,7 @@ public class GcsService {
                         .build(),
                 filePart.getBytes());
 
+
         System.out.println(blobInfo.getBlobId());
 
         Book book = new Book();
@@ -61,13 +62,10 @@ public class GcsService {
         book.setDescription(description.toLowerCase());
         book.setUrl(blobInfo.getMediaLink());
 
-        FileProcessing fileProcessing = fileProcessingService.procesar(FILENAME);
-        book.setIsbn(fileProcessing.getIsbn());
-        book.setNumberPages(fileProcessing.getNumberPages());
-        book.setSentiment(fileProcessing.getSentiment());
-        book.setKeywords(fileProcessing.getKeywords());
-        book.setInfo(fileProcessing.getInfo());
-        book.setSize(fileProcessing.getSize());
+
+        PdfService pdfService = new PdfService();
+
+        pdfService.extraerDatos(this.convert(filePart), book);
 
         book.setUploadedDate(new Date());
         book.setCategory(category);
@@ -93,6 +91,15 @@ public class GcsService {
 
         return ResponseEntity.ok().build();
 
+    }
+
+    private File convert(MultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
     }
 
 }
