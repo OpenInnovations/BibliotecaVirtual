@@ -1,7 +1,11 @@
-FROM openjdk:8u242-jre-slim
+FROM alpine 
 
-MAINTAINER José Quispe
+MAINTAINER José Luis Quispe Luyo
 
+RUN apk update \
+	&& apk add openjdk8-jre \
+	&& java -version
+ 
 EXPOSE 8081
 
 COPY target/searchservice-1.jar searchservice.jar
